@@ -1,0 +1,38 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userID} {
+      allow get: if isUserAuthenticated(userID);
+      allow create: if isUserAuthenticated(userID)
+                    && validateString(incomingData().name, 1, 100);
+
+      match /tasks/{taskID} {
+        allow read: if isUserAuthenticated(userID);
+        allow create: if isUserAuthenticated(userID)
+                      && validateString(incomingData().text, 1, 100)
+                      && incomingData().color in ['red', 'green', 'blue', 'yellow']
+                      && incomingData().isDone is bool;
+        allow update: if isUserAuthenticated(userID)
+                      && incomingData().text == existingData().text
+                      && incomingData().color == existingData().color
+                      && incomingData().isDone != existingData().isDone;
+        allow delete: if isUserAuthenticated(userID);
+      }
+    }
+  }
+
+  function isUserAuthenticated(userID) {
+    return request.auth.uid == userID;
+  }
+
+  function existingData() {
+    return resource.data;
+  }
+
+  function incomingData() {
+    return request.resource.data;
+  }
+
+  function validateString(text, min, max) {
+    return text is string && min <= text.size() && text.size() <= max;
+  }
+}

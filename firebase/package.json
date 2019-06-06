@@ -1,0 +1,10 @@
+{
+  "name": "backend",
+  "engines": {
+    "node" : "8"
+  },
+  "devDependencies": {
+    "firebase-tools": "^6.9.2"
+  },
+  "private": true
+}
