@@ -1,3 +1,13 @@
+# IMPORTANT
+This repository has been archived.  
+New repository is [here](https://github.com/sgr-ksmt/FireTodo)!!!
+
+<br />
+<br />
+<br />
+<br />
+<br />
+
 # SwiftUI-Firebase-Todo
 
 Simple Todo application that using SwiftUI and Firebase(Authentication, Cloud Firestore)
